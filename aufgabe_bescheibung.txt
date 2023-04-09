@@ -1,0 +1,11 @@
+Das angehängte CSV-File enthält Wärmezählerdaten (Arbeit, Leistung & Volumenstrom) sowie Temperatur-Sensordaten (insbes. die Außentemperatur) einer mit Fernwärme versorgten Heizungsanlage.
+
+Die Aufgabe besteht darin, Lastprofile (Leistung gegen Zeit) über den Zeitraum eines Tages zu erstellen.
+
+Es sollen die folgenden Fragen beantwortet werden:
+1. Gibt es einen Unterschied in Lastprofilen zwischen Werktagen, Samstagen und Sonn- und Feiertagen (Das Haus befindet sich in Bayern)?
+2. Kann man aus den Daten die Heizperiode ermitteln?
+3. Gibt es eine Nachtabsenkung während der Heizperiode?
+ 
+
+Für die Umsetzung soll ein Programm geschrieben werden, die Auswahl von Bibliotheken und weiteren Tools zur Beantwortung der Fragen ist dir freigestellt und du kannst hierbei selbst wählen, wie du die Ergebnisse präsentieren möchten.
