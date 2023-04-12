@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pandas = "*"
+openpyxl = "*"
+streamlit = "*"
+plotly-express = "*"
+jupyterlab = "*"
+matplotlib = "*"
+holidays = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"
