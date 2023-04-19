@@ -1,7 +1,5 @@
 import pandas as pd
 import plotly.graph_objs as go
-import numpy as np
-import holidays
 
 filename = "Trend-2021-09-09_08-02_30.csv"
 
@@ -42,42 +40,35 @@ df = df.loc[(df.index.month >= 10) | (df.index.month <= 4)]
 # ----- Process Temperature Data -----
 # Calculate mean temperature for each hour
 temps = df.groupby(df.index.hour).mean()
-vorlauf_temp = temps['Prim. Vorlauf']
-rucklauf_temp = temps['Prim. Rücklauf']
-outside_temp = temps['Außentemperatur']
-rucklauf_1_temp = temps['Rücklauf 1']
-rucklauf_2_temp = temps['Rücklauf 2']
-vorlauf_1_temp = temps['Vorlauf 1']
+temp_cols = ['Prim. Vorlauf', 'Prim. Rücklauf',
+             'Außentemperatur', 'Rücklauf 1', 'Rücklauf 2', 'Vorlauf 1']
+temp_data = [(temps[col], col) for col in temp_cols]
 
 # Define the traces for each line
-hovertemplate = '%{y:.1f}°C'
 hour_values = list(range(0, 24))
-trace_vorlauf = go.Scatter(x=hour_values, y=vorlauf_temp,
-                           mode='lines', name='Vorlauf Temperature',
-                           hovertemplate=hovertemplate)
-trace_vorlauf_1 = go.Scatter(x=hour_values, y=vorlauf_1_temp,
-                             mode='lines', name='Vorlauf 1 Temperature',
-                             hovertemplate=hovertemplate)
-trace_rucklauf = go.Scatter(x=hour_values, y=rucklauf_temp,
-                            mode='lines', name='Rucklauf Temperature',
-                            hovertemplate=hovertemplate)
-trace_rucklauf_1 = go.Scatter(x=hour_values, y=rucklauf_1_temp,
-                              mode='lines', name='Rucklauf 1 Temperature',
-                              hovertemplate=hovertemplate)
-trace_rucklauf_2 = go.Scatter(x=hour_values, y=rucklauf_2_temp,
-                              mode='lines', name='Rucklauf 2 Temperature',
-                              hovertemplate=hovertemplate)
-trace_outside = go.Scatter(x=hour_values, y=outside_temp,
-                           mode='lines', name='Outside Temperature',
-                           hovertemplate=hovertemplate)
+hovertemplate = '%{y:.1f}°C'
 
-# Define the data and layout
-data = [trace_vorlauf, trace_vorlauf_1, trace_rucklauf, trace_rucklauf_1, trace_rucklauf_2, trace_outside]
-layout = go.Layout(title=dict(text='Hourly Temperature', x=0.5),
-                   xaxis=dict(title='Time (Hour)', dtick=1),
-                   yaxis=dict(title='Temperature (°C)'))
+fig = go.Figure()
 
-# Create the figure and plot it
-fig = go.Figure(data=data, layout=layout)
-fig.update_layout(showlegend=True, height=600, hovermode='x')
+for temp, name in temp_data:
+    fig.add_trace(
+        go.Scatter(
+            x=hour_values,
+            y=temp,
+            mode='lines',
+            name=name,
+            hovertemplate=hovertemplate
+        )
+    )
+
+fig.update_layout(
+    title=dict(text='Hourly Temperature', x=0.5),
+    xaxis=dict(title='Time (Hour)', dtick=1),
+    yaxis=dict(title='Temperature (°C)'),
+    showlegend=True,
+    height=600,
+    hovermode='x'
+)
+
+# Show the plotly figure
 fig.show()

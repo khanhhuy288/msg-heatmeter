@@ -1,6 +1,5 @@
 import pandas as pd
 import plotly.graph_objs as go
-import numpy as np
 import holidays
 
 filename = "Trend-2021-09-09_08-02_30.csv"
@@ -41,25 +40,33 @@ holiday_load = df_holiday['Leistung'].groupby(df_holiday.index.hour).mean()
 
 # ----- Load Profile Chart -----
 # Define the data and layout
-data = []
 hour_values = list(range(0, 24))
-loads = [weekday_load, saturday_load, sunday_load, holiday_load]
-names = ['Weekdays', 'Saturdays', 'Sundays', 'Holidays']
+load_data = [(weekday_load, 'Weekdays'),
+             (saturday_load, 'Saturdays'),
+             (sunday_load, 'Sundays'),
+             (holiday_load, 'Holidays')]
 
-for y, name in zip(loads, names):
-    trace = go.Scatter(x=hour_values, y=y, mode='lines', name=name)
-    trace.hovertemplate = '%{y:.2f} kW'
-    data.append(trace)
+fig = go.Figure()
 
-layout = go.Layout(title=dict(text='Load Profile', x=0.5),
-                   xaxis=dict(title='Time (Hour)', dtick=1),
-                   yaxis=dict(title='Load (kW)'),
-                   legend=dict(x=0.85, y=0.95, traceorder='normal'),
-                   height=600,
-                   hovermode='x')
+for load, name in load_data:
+    fig.add_trace(
+        go.Scatter(
+            x=hour_values,
+            y=load,
+            mode='lines',
+            name=name,
+            hovertemplate='%{y:.2f} kW'
+        )
+    )
 
-# Create plotly figure
-fig = go.Figure(data=data, layout=layout)
+fig.update_layout(
+    title=dict(text='Load Profile', x=0.5),
+    xaxis=dict(title='Time (Hour)', dtick=1),
+    yaxis=dict(title='Load (kW)'),
+    legend=dict(x=0.85, y=0.95, traceorder='normal'),
+    height=600,
+    hovermode='x'
+)
 
 # Show the plotly figure
 fig.show()
