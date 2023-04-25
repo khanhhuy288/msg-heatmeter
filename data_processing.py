@@ -43,7 +43,6 @@ def filter_data(df, selected_date_range, is_heating_season):
 
 
 def process_load_profile_data(df):
-    # ----- Process Load Profile Data -----
     bayern_holidays = holidays.country_holidays('DE', subdiv='BY', years=df.index.year.unique())
     holiday_mask = [date in bayern_holidays for date in df.index.date]
 
@@ -73,9 +72,9 @@ def process_temperature_energy_data(df):
 
 
 def process_temperature_data(df):
-    # ----- Process Temperature Data -----
     temps = df.groupby(df.index.hour).mean()
-    temp_cols = ['Prim. Vorlauf', 'Prim. Rücklauf', 'Außentemperatur', 'Rücklauf 1', 'Rücklauf 2', 'Vorlauf 1']
+    temp_cols = ['Prim. Vorlauf', 'Prim. Rücklauf', 'Außentemperatur',
+                 'Rücklauf 1', 'Rücklauf 2', 'Vorlauf 1']
     temp_data = {col: temps[col] for col in temp_cols}
 
     return temp_data

@@ -11,7 +11,7 @@ FIELDS = ["Leistung [kW]", "Zeit", "Arbeit [MWh]",
           "Prim. Rücklauf [°C]", "Rücklauf 1 [°C]",
           "Rücklauf 2 [°C]", "Vorlauf 1 [°C]"]
 
-st.set_page_config(page_title="Heat Meter Dashboard",
+st.set_page_config(page_title="Wärmezähler Dashboard",
                    page_icon=":timer_clock:",
                    layout='wide')
 

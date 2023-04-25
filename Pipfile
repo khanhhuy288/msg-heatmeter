@@ -4,16 +4,14 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pandas = "*"
-openpyxl = "*"
-streamlit = "*"
-plotly= "*"
-plotly-express = "*"
-jupyterlab = "*"
-matplotlib = "*"
-holidays = "*"
+pandas = "==1.5.3"
+streamlit = "==1.21.0"
+plotly= "==5.14.1"
+holidays = "==0.23"
 
 [dev-packages]
+jupyterlab = "==3.6.3"
+matplotlib = "==3.7.1"
 
 [requires]
 python_version = "3.11"
