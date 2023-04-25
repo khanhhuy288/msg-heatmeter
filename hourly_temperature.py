@@ -44,6 +44,7 @@ temp_cols = ['Prim. Vorlauf', 'Prim. Rücklauf',
              'Außentemperatur', 'Rücklauf 1', 'Rücklauf 2', 'Vorlauf 1']
 temp_data = [(temps[col], col) for col in temp_cols]
 
+# ----- Temperature Chart -----
 # Define the traces for each line
 hour_values = list(range(0, 24))
 hovertemplate = '%{y:.1f}°C'

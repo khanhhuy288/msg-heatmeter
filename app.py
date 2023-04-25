@@ -1,11 +1,17 @@
 import pandas as pd
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
+from datetime import datetime
 
 import holidays
 import streamlit as st
 
-filename = "Trend-2021-09-09_08-02_30.csv"
+FILENAME = "Trend-2021-09-09_08-02_30.csv"
+THEME = None
+
+st.set_page_config(page_title="Heat Meter Dashboard",
+                   page_icon=":timer_clock:",
+                   layout='wide')
 
 # Read the CSV file and select columns
 fields = ["Leistung [kW]", "Zeit", "Arbeit [MWh]",
@@ -13,7 +19,13 @@ fields = ["Leistung [kW]", "Zeit", "Arbeit [MWh]",
           "Prim. Vorlauf [°C]",
           "Prim. Rücklauf [°C]", "Rücklauf 1 [°C]", "Rücklauf 2 [°C]", "Vorlauf 1 [°C]"]
 
-df = pd.read_csv(filename, delimiter=";", usecols=fields)
+
+@st.cache_data
+def load_data(filename, fields):
+    return pd.read_csv(filename, delimiter=";", usecols=fields)
+
+
+df = load_data(FILENAME, fields)
 
 # Rename columns
 df.rename(columns={'Leistung [kW]': 'Leistung', "Arbeit [MWh]": "Arbeit",
@@ -41,6 +53,27 @@ df = df[df['Arbeit'] > 0]
 # Set the index of the DataFrame to the "Zeit" column
 df.set_index('Zeit', inplace=True)
 
+# Sidebar
+st.sidebar.header("Please filter here:")
+
+# Create a date range selector
+selected_date_range = st.sidebar.slider(
+    "Select date range:",
+    min_value=df.index.min().date(),
+    max_value=df.index.max().date(),
+    value=(df.index.min().date(), df.index.max().date()),
+    format="DD.MM.YY"
+)
+
+# Create a checkbox for heating season
+is_heating_season = st.sidebar.checkbox("Heating season only (01.10 - 30.04)")
+
+# Filter the DataFrame based on the selected date range and the heating season checkbox
+df = df.loc[(df.index.date >= selected_date_range[0])
+            & (df.index.date <= selected_date_range[1])]
+if is_heating_season:
+    df = df.loc[(df.index.month >= 10) | (df.index.month <= 4)]
+
 # ----- Process Load Profile Data -----
 # Create a holiday mask
 bayern_holidays = holidays.country_holidays('DE', subdiv='BY', years=df.index.year.unique())
@@ -60,14 +93,13 @@ holiday_load = df_holiday['Leistung'].groupby(df_holiday.index.hour).mean()
 # ----- Process Temperature, Energy Data -----
 # Group the DataFrame by the month and calculate the mean of 'Außentemperatur'
 monthly_temp = df['Außentemperatur'].groupby(pd.Grouper(freq='M')).mean()
+monthly_temp.index = monthly_temp.index - pd.offsets.MonthBegin(1)
 
 # Group the DataFrame by the month and calculate the monthly total 'Arbeit'
-monthly_energy = df['Arbeit'].groupby(pd.Grouper(freq='M')).max().diff().fillna(method='bfill')
+monthly_energy = df['Arbeit'].groupby(pd.Grouper(freq='M')).max().diff().fillna(method='bfill', limit=1)
+monthly_energy.index = monthly_energy.index - pd.offsets.MonthBegin(1)
 
 # ----- Process Temperature Data -----
-# # Filter to only include Heizperiode (01.10 - 30.04)
-# df = df.loc[(df.index.month >= 10) | (df.index.month <= 4)]
-
 # Calculate mean temperature for each hour
 temps = df.groupby(df.index.hour).mean()
 temp_cols = ['Prim. Vorlauf', 'Prim. Rücklauf',
@@ -126,7 +158,8 @@ temp_energy_fig.update_layout(
 temp_energy_fig.update_xaxes(title_text="Month", tickangle=-90, tickformat='%m.%Y', showticklabels=True, dtick='M1')
 
 # Set y-axes titles
-temp_energy_fig.update_yaxes(title_text="Average Temperature (°C)", secondary_y=False, showgrid=True, title_font=dict(color='blue'), dtick=2.5)
+temp_energy_fig.update_yaxes(title_text="Average Temperature (°C)", secondary_y=False, showgrid=True,
+                             title_font=dict(color='blue'), dtick=2.5)
 temp_energy_fig.update_yaxes(title_text="Energy (MWh)", secondary_y=True, showgrid=False, title_font=dict(color='red'))
 
 # Remove trace name from hover box
@@ -158,17 +191,9 @@ temp_fig.update_layout(
     hovermode='x'
 )
 
-st.plotly_chart(
-    load_fig,
-    theme=None,
-)
+# Main Page
+st.title(":timer_clock: Heat Meter Dashboard")
 
-st.plotly_chart(
-    temp_energy_fig,
-    theme=None,
-)
-
-st.plotly_chart(
-    temp_fig,
-    theme=None,
-)
+st.plotly_chart(load_fig, theme=THEME)
+st.plotly_chart(temp_energy_fig, theme=THEME)
+st.plotly_chart(temp_fig, theme=THEME)
