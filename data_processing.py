@@ -53,10 +53,10 @@ def process_load_profile_data(df):
     df_holiday = df[holiday_mask]
 
     load_profile_data = {
-        'Weekdays': df_weekday['Leistung'].groupby(df_weekday.index.hour).mean(),
-        'Saturdays': df_saturday['Leistung'].groupby(df_saturday.index.hour).mean(),
-        'Sundays': df_sunday['Leistung'].groupby(df_sunday.index.hour).mean(),
-        'Holidays': df_holiday['Leistung'].groupby(df_holiday.index.hour).mean()
+        'Werktage': df_weekday['Leistung'].groupby(df_weekday.index.hour).mean(),
+        'Samstage': df_saturday['Leistung'].groupby(df_saturday.index.hour).mean(),
+        'Sonntage': df_sunday['Leistung'].groupby(df_sunday.index.hour).mean(),
+        'Feiertage': df_holiday['Leistung'].groupby(df_holiday.index.hour).mean()
     }
 
     return load_profile_data

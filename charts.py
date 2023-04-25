@@ -20,9 +20,9 @@ def create_load_profile_chart(load_data):
         )
 
     load_fig.update_layout(
-        title=dict(text='Load Profile'),
-        xaxis=dict(title='Time (Hour)', dtick=1),
-        yaxis=dict(title='Load (kW)'),
+        title=dict(text='Lastprofil'),
+        xaxis=dict(title='Zeit (Stunde)', dtick=1),
+        yaxis=dict(title='Leistung (kW)'),
         hovermode='x'
     )
 
@@ -41,15 +41,15 @@ def create_temperature_energy_chart(monthly_temp, monthly_energy):
     temp_energy_fig.add_trace(energy_trace, secondary_y=True)
 
     temp_energy_fig.update_layout(
-        title=dict(text="Monthly Average Temperature and Total Energy"),
+        title=dict(text="Monatliche Durchschnittstemperatur und Gesamtarbeit"),
         showlegend=False,
         hovermode="x"
     )
 
-    temp_energy_fig.update_xaxes(title_text="Month", tickangle=-90, tickformat='%m.%Y', showticklabels=True, dtick='M1')
-    temp_energy_fig.update_yaxes(title_text="Average Temperature (°C)", secondary_y=False, showgrid=True,
+    temp_energy_fig.update_xaxes(title_text="Monat", tickangle=-90, tickformat='%m.%Y', showticklabels=True, dtick='M1')
+    temp_energy_fig.update_yaxes(title_text="Durchschnittstemperatur (°C)", secondary_y=False, showgrid=True,
                                  title_font=dict(color='blue'), dtick=2.5)
-    temp_energy_fig.update_yaxes(title_text="Energy (MWh)", secondary_y=True, showgrid=False, title_font=dict(color='red'))
+    temp_energy_fig.update_yaxes(title_text="Arbeit (MWh)", secondary_y=True, showgrid=False, title_font=dict(color='red'))
 
     temp_energy_fig.update_traces(showlegend=False)
 
@@ -74,9 +74,9 @@ def create_temperature_chart(temp_data):
         )
 
     temp_fig.update_layout(
-        title=dict(text='Hourly Temperature'),
-        xaxis=dict(title='Time (Hour)', dtick=1),
-        yaxis=dict(title='Temperature (°C)'),
+        title=dict(text='Stündliche Temperaturen'),
+        xaxis=dict(title='Zeit (Stunde)', dtick=1),
+        yaxis=dict(title='Temperaturen (°C)'),
         showlegend=True,
         hovermode='x'
     )

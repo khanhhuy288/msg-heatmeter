@@ -16,7 +16,7 @@ st.set_page_config(page_title="Heat Meter Dashboard",
                    layout='wide')
 
 # Main Page
-st.title(":timer_clock: Heat Meter Dashboard")
+st.title(":timer_clock: Wärmezähler Dashboard")
 st.markdown("---")
 
 df = load_data(FILENAME, FIELDS)
