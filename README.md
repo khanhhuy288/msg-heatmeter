@@ -1,10 +1,10 @@
-# Heat Meter Dashboard
+# Heating System Dashboard
 
-A Streamlit-based interactive dashboard to visualize heat meter data, including load profiles, monthly average temperature and total energy consumption, and hourly temperature.
+A Streamlit-based interactive dashboard to visualize heat meter and sensor temperature data, including load profiles, monthly average temperature and total energy consumption, and hourly temperature.
 
 The dashboard can be accessed [here](https://khanhhuy288-msg-heatmeter-app-r50271.streamlit.app/).
 
-![Heat Meter Dashboard](images/dashboard.png)
+![Heating System Dashboard](images/dashboard.png)
 
 ## Features
 
@@ -119,6 +119,6 @@ git push -u origin master
 
 13. Click the "Deploy" button. Streamlit Cloud will create a new app and provide you with a shareable URL. Any time you do a `git push`, your app will update immediately.
 
-14. Share the URL with others to let them access your Heat Meter Dashboard.
+14. Share the URL with others to let them access your Heating System Dashboard.
 
 For more information on deploying Streamlit apps to Streamlit Cloud, refer to the [official documentation](https://docs.streamlit.io/en/stable/deploy_streamlit_app.html).
