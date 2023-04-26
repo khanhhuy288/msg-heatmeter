@@ -94,10 +94,10 @@ git commit -m "Initial commit"
 5. Link your local repository to the remote repository.
 
 ```bash
-git remote add origin https://github.com/yourusername/heat-meter-dashboard.git
+git remote add origin https://github.com/yourusername/msg-heatmeter.git
 ```
 
-Make sure to replace `https://github.com/yourusername/heat-meter-dashboard.git` with your repository URL.
+Make sure to replace `https://github.com/yourusername/msg-heatmeter.git` with your repository URL.
 
 6. Push your local repository to the remote repository.
 
@@ -105,9 +105,9 @@ Make sure to replace `https://github.com/yourusername/heat-meter-dashboard.git` 
 git push -u origin master
 ```
 
-7. Sign up for a [Streamlit Cloud account](https://streamlit.io/cloud) if you haven't already.
+7. Sign up for a [Streamlit Cloud](https://streamlit.io/cloud) account.
 
-8. Log in to your Streamlit Cloud account and navigate to the [Dashboard](https://share.streamlit.io/dashboard).
+8. Log in to your Streamlit Cloud account and navigate to the [Dashboard](https://share.streamlit.io/).
 
 9. Click the "New app" button in the top right corner.
 
@@ -117,8 +117,7 @@ git push -u origin master
 
 12. Specify the file path to your `app.py` file in the "File path" field.
 
-13. Click the "Deploy" button. Streamlit Cloud will create a new app and provide you with a shareable URL. 
-Any time you do a `git push`, your app will update immediately.
+13. Click the "Deploy" button. Streamlit Cloud will create a new app and provide you with a shareable URL. Any time you do a `git push`, your app will update immediately.
 
 14. Share the URL with others to let them access your Heat Meter Dashboard.
 
