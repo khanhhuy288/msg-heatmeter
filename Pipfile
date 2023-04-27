@@ -8,6 +8,7 @@ pandas = "==1.5.3"
 streamlit = "==1.21.0"
 plotly= "==5.14.1"
 holidays = "==0.23"
+numpy = "==1.24.3"
 
 [dev-packages]
 jupyterlab = "==3.6.3"
